@@ -1,4 +1,4 @@
-# **BMPembedder**
+# **BMPinjector**
 
 BMPembedder is a tool that enables file (raw bytes) embedding in BMP image file.
 
