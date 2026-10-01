@@ -1,0 +1,43 @@
+#!/usr/bin/python3
+import sys
+from argparse import ArgumentParser
+
+from BMPstat.bmpstat import BMPstat
+
+def extractor(host: str, out: str):
+	print("="*15+" Extractor "+"="*15)
+
+	with open(host, "rb") as f:
+		"""
+		Host image is BMPstat parsing
+		"""
+		host_bmp = BMPstat(f.read())
+	
+	with open(out, "wb") as f:
+		f.write(host_bmp.get_payload())
+
+	print(f"\nOUTPUT:\n\t[+] New file {out}\n")
+
+def get_input():
+	# Command-line arguments parser
+	parser = ArgumentParser(
+	prog="BMPextractor", 
+	description="Extract data in BMP file.")
+
+	parser = ArgumentParser(add_help=True)
+	parser.add_argument("-i", "--host", help="Host BMP image", type=str, required=True)
+	parser.add_argument("-o", "--output", help="Output filename", type=str, required=True)
+
+	try:
+		args = parser.parse_args()
+	except SystemExit as e:
+		print(e)
+
+	host = args.host
+	out = args.output
+
+	return host, out
+
+if __name__ == "__main__":
+	host, out = get_input()
+	extractor(host, out)
